@@ -9,7 +9,7 @@ const Console = () => {
   
   const inputText = React.useRef();
 
-  const [consoleOutput, sacuvane, brojac, onEnter] = UseOnEnter();
+  const [consoleOutput, sacuvane, brojac, onEnter, updateConsoleOutput] = UseOnEnter();
 
   br = brojac;
   
@@ -28,8 +28,6 @@ const povrat= (e)=>{
                     }
                     break;
                 case 40:
-                  console.log(br)
-                  console.log(sacuvane.length)
                   if(br === sacuvane.length-1){
                     br=br+1
                     inputText.current.value="";
@@ -38,14 +36,13 @@ const povrat= (e)=>{
                     br = br + 1;
                     inputText.current.value=sacuvane[br];
                   }
-                  
                     break;
     }
 }
 
   return (
     <section className="console">
-      <MapConsoleOutput consoleOutput={consoleOutput} />
+      <MapConsoleOutput consoleOutput={consoleOutput} updateConsoleOutput={updateConsoleOutput}/>
       <div className="input-prompt">
         <Prompt />
         <input

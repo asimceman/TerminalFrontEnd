@@ -19,24 +19,19 @@ const UseOnEnter = () => {
   const [brojac, setBrojac] = React.useState(0);
 
   const onEnter = (value, key) => {
-      //console.log(key);
     if (key === "Enter") {
-        const noviInput = value;
+      const noviInput = value;
 
-        if(value==="")
-        return updateConsoleOutput(consoleOutput => consoleOutput.concat(""))
+      if(value==="")
+      return updateConsoleOutput(consoleOutput => consoleOutput.concat(""))
         
-        setSacuvane(sacuvane => sacuvane.concat(noviInput))
+      setSacuvane(sacuvane => sacuvane.concat(noviInput))
         
-        updateConsoleOutput(consoleOutput => consoleOutput.concat(noviInput))
+      updateConsoleOutput(consoleOutput => consoleOutput.concat(noviInput))
         
-        let args = value.split(" ");
+      let args = value.split(" ");
 
-        //Stavlja prazan symbol u array kad se splita ako ima space, HELP??
-
-        console.log("Args ", args)
-
-        const argument = String(commands[args[0]]);
+      const argument = String(commands[args[0]]);
 
       const newConsoleLine = String(commands[args[0]]) || "Invalid Command";
       
@@ -45,16 +40,15 @@ const UseOnEnter = () => {
         consoleOutput.concat("Invalid Command"), setBrojac(brojac=>brojac+1)
       )}
 
-      console.log(newConsoleLine);
-
-       return updateConsoleOutput(consoleOutput => consoleOutput.concat("Ispravna komanda!")),setBrojac(brojac=>brojac+1); 
+      if(args.length>1){
+        return updateConsoleOutput(consoleOutput => consoleOutput.concat("Ispravna komanda!" + args[0].toString() + " " + args[1].toString() + "!")),setBrojac(brojac=>brojac+1); 
+      }
+      else
+       return updateConsoleOutput(consoleOutput => consoleOutput.concat("Ispravna komanda!" + args[0].toString() + "!")),setBrojac(brojac=>brojac+1); 
     }
-    console.log(key);
-
-    
   };
 
-  return [consoleOutput, sacuvane, brojac, onEnter];
+  return [consoleOutput, sacuvane, brojac, onEnter, updateConsoleOutput];
 };
 
 export default UseOnEnter;

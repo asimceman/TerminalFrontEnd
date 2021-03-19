@@ -1,8 +1,8 @@
 import React from "react";
 import Prompt from "./Prompt";
 
-const MapConsoleOutput = ({ consoleOutput }) => {
-  console.log(consoleOutput)
+const MapConsoleOutput =  ({ consoleOutput, updateConsoleOutput }) => {
+  
   const scrollRef = React.useRef();
 
   React.useEffect(() => {
@@ -10,39 +10,53 @@ const MapConsoleOutput = ({ consoleOutput }) => {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   });
 
-  // return (
-  //   <div className="console-output" ref={scrollRef}>
-  //     {consoleOutput.map((item, index) => (
-  //       <div key={index}>
-  //         <Prompt />
-  //         <span>{item}</span>
-  //       </div>
-  //     ))}
-  //   </div>
-  // );
+if(consoleOutput.length>1){
+  let item = consoleOutput[consoleOutput.length-1].toString();
 
+  const varijabla = item.includes("Ispravna komanda!");
+            if(varijabla ){
+              const itemString = item.toString().split("!");
+  
+              const komanda = itemString[1] //.toString().split(" ");
+
+                 fetch('http://109.237.36.76:25565/komanda/', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                      command: {
+                          komanda: komanda,
+                    }
+                  })
+                })
+                .then(res => res.text())
+                .then(res => { 
+                  const clone = [...consoleOutput]
+
+                  clone[clone.length-1] = res;
+                  updateConsoleOutput(clone)
+                })
+            }
+        }
+        
   return (
     <div className="console-output" ref={scrollRef}>
-      {consoleOutput.map(function (item, index)  {
+      {consoleOutput.map((item,index,{length}) =>  {
+
         if(item=="Invalid Command"){
         return(
         <div key={index}>
           <span>{item}</span>
         </div>)}
 
-        else if(item =="Ispravna komanda!"){
-          return(
-            <div key={index}>
-              <span>{item}</span>
-            </div>)
-        }
-
         else{
           return(
             <div key={index}>
               <Prompt />
               <span>{item}</span>
-            </div>)
+            </div>
+            )
         }
       })}
     </div>
