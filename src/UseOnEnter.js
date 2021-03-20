@@ -15,19 +15,19 @@ const commands = {
 
 const UseOnEnter = () => {
   const [consoleOutput, updateConsoleOutput] = React.useState([]);
-  const [sacuvane, setSacuvane] = React.useState([]);
-  const [brojac, setBrojac] = React.useState(0);
+  const [savedLogs, setSavedLogs] = React.useState([]);
+  const [counter, setCounter] = React.useState(0);
 
   const onEnter = (value, key) => {
     if (key === "Enter") {
-      const noviInput = value;
+      const newInput = value;
 
       if(value==="")
       return updateConsoleOutput(consoleOutput => consoleOutput.concat(""))
         
-      setSacuvane(sacuvane => sacuvane.concat(noviInput))
+      setSavedLogs(savedLogs => savedLogs.concat(newInput))
         
-      updateConsoleOutput(consoleOutput => consoleOutput.concat(noviInput))
+      updateConsoleOutput(consoleOutput => consoleOutput.concat(newInput))
         
       let args = value.split(" ");
 
@@ -37,18 +37,18 @@ const UseOnEnter = () => {
       
       if(newConsoleLine==="Invalid Command" || args.length-1!==parseInt(argument)){
       return updateConsoleOutput(consoleOutput =>
-        consoleOutput.concat("Invalid Command"), setBrojac(brojac=>brojac+1)
+        consoleOutput.concat("Invalid Command"), setCounter(brojac=>brojac+1)
       )}
 
       if(args.length>1){
-        return updateConsoleOutput(consoleOutput => consoleOutput.concat("Ispravna komanda!" + args[0].toString() + " " + args[1].toString() + "!")),setBrojac(brojac=>brojac+1); 
+        return updateConsoleOutput(consoleOutput => consoleOutput.concat("Valid Command!" + args[0].toString() + " " + args[1].toString() + "!")),setCounter(counter=>counter+1); 
       }
       else
-       return updateConsoleOutput(consoleOutput => consoleOutput.concat("Ispravna komanda!" + args[0].toString() + "!")),setBrojac(brojac=>brojac+1); 
+       return updateConsoleOutput(consoleOutput => consoleOutput.concat("Valid Command!" + args[0].toString() + "!")),setCounter(counter=>counter+1); 
     }
   };
 
-  return [consoleOutput, sacuvane, brojac, onEnter, updateConsoleOutput];
+  return [consoleOutput, savedLogs, counter, onEnter, updateConsoleOutput];
 };
 
 export default UseOnEnter;

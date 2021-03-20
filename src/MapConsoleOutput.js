@@ -13,11 +13,24 @@ const MapConsoleOutput =  ({ consoleOutput, updateConsoleOutput }) => {
 if(consoleOutput.length>1){
   let item = consoleOutput[consoleOutput.length-1].toString();
 
-  const varijabla = item.includes("Ispravna komanda!");
-            if(varijabla ){
+  const isCommandValid = item.includes("Valid Command!");
+            if(isCommandValid ){
               const itemString = item.toString().split("!");
   
-              const komanda = itemString[1] //.toString().split(" ");
+              //const command = itemString[1] //.toString().split(" ");
+
+              const command = itemString[1].toString().split(" ");
+              //console.log(command);
+  
+              let firstPart = command[0].toString();
+              let argument = "";
+            
+            if(command.length>1){
+              argument = command[1].toString();
+            }
+
+            // console.log("First part: ", firstPart);
+            // console.log("Argument: ", argument);
 
                  fetch('http://109.237.36.76:25565/komanda/', {
                   method: 'POST',
@@ -25,10 +38,19 @@ if(consoleOutput.length>1){
                       'Content-Type': 'application/json'
                   },
                   body: JSON.stringify({
-                      command: {
-                          komanda: komanda,
-                    }
-                  })
+                    command: {
+                        komanda: firstPart,
+                        parametri: {
+                          parametar1: argument
+                        }
+                  }
+                })
+
+                  // body: JSON.stringify({
+                  //     command: {
+                  //         komanda: command,
+                  //   }
+                  // })
                 })
                 .then(res => res.text())
                 .then(res => { 

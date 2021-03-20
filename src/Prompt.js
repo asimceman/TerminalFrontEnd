@@ -1,5 +1,5 @@
 import React from "react";
 
-const Prompt = () => <span>PS komandna linija&#62; </span>;
+const Prompt = () => <span>PS Command Line&#62; </span>;
 
 export default Prompt;

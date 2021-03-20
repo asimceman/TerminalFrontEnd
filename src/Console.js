@@ -3,38 +3,38 @@ import Prompt from "./Prompt";
 import UseOnEnter from "./UseOnEnter";
 import MapConsoleOutput from "./MapConsoleOutput";
 
-var br = 0;
+var counterOfSavedLogs = 0;
 
 const Console = () => {
   
   const inputText = React.useRef();
 
-  const [consoleOutput, sacuvane, brojac, onEnter, updateConsoleOutput] = UseOnEnter();
+  const [consoleOutput, savedLogs, counter, onEnter, updateConsoleOutput] = UseOnEnter();
 
-  br = brojac;
+  counterOfSavedLogs = counter;
   
   React.useEffect(() => {
     inputText.current.value = "";
     inputText.current.focus();
   });
 
-const povrat= (e)=>{
+const logsHistory= (e)=>{
   if (e.key === 'ArrowUp' || e.key === 'ArrowDown') e.preventDefault();
     switch (e.keyCode) {
                 case 38:
-                    if(br!==0){
-                    br = br-1;
-                    inputText.current.value=sacuvane[br];
+                    if(counterOfSavedLogs!==0){
+                    counterOfSavedLogs = counterOfSavedLogs-1;
+                    inputText.current.value=savedLogs[counterOfSavedLogs];
                     }
                     break;
                 case 40:
-                  if(br === sacuvane.length-1){
-                    br=br+1
+                  if(counterOfSavedLogs === savedLogs.length-1){
+                    counterOfSavedLogs=counterOfSavedLogs+1
                     inputText.current.value="";
                   }
-                  if(br !== sacuvane.length){
-                    br = br + 1;
-                    inputText.current.value=sacuvane[br];
+                  if(counterOfSavedLogs !== savedLogs.length){
+                    counterOfSavedLogs = counterOfSavedLogs + 1;
+                    inputText.current.value=savedLogs[counterOfSavedLogs];
                   }
                     break;
     }
@@ -50,7 +50,7 @@ const povrat= (e)=>{
           type="text"
           ref={inputText}
           onKeyPress={({ target: { value }, key }) => onEnter(value, key)}
-          onKeyDown={povrat}
+          onKeyDown={logsHistory}
         />
       </div>
     </section>
