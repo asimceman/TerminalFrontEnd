@@ -41,8 +41,8 @@ const UseOnEnter = () => {
       if(response.status == 200)
       {
           var x = await response.json();
-          console.log(JSON.stringify(x.accessToken));
-          token = JSON.stringify(x.accessToken)
+          //console.log(JSON.stringify(x.accessToken));
+          token = x.accessToken
       }
       else{
         //console.log("Error");
