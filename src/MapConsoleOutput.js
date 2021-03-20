@@ -1,7 +1,8 @@
 import React from "react";
 import Prompt from "./Prompt";
 
-const MapConsoleOutput =  ({ consoleOutput, updateConsoleOutput }) => {
+const MapConsoleOutput =  ({ consoleOutput, updateConsoleOutput, token }) => {
+
   
   const scrollRef = React.useRef();
 
@@ -19,31 +20,38 @@ if(consoleOutput.length>1){
   
               //const command = itemString[1] //.toString().split(" ");
 
-              const command = itemString[1].toString().split(" ");
+              //const command = itemString[1].toString().split(" ");
               //console.log(command);
+
+              const command =  itemString[1]
+
   
-              let firstPart = command[0].toString();
-              let argument = "";
+              // let firstPart = command[0].toString();
+              // let argument = "";
             
-            if(command.length>1){
-              argument = command[1].toString();
-            }
+            // if(command.length>1){
+            //   argument = command[1].toString();
+            // }
 
             // console.log("First part: ", firstPart);
             // console.log("Argument: ", argument);
+              console.log(token);
+            
 
-                 fetch('http://109.237.36.76:25565/komanda/', {
+                 fetch('http://109.237.36.76:25565/command', {
                   method: 'POST',
                   headers: {
-                      'Content-Type': 'application/json'
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    "Authorization" : "Bearer "+ token,
                   },
+                  // headers: { 'Content-Type': 'application/json' },
+                  // headers: {"Authorization" : "Bearer "+ token},
+                  //body: JSON.stringify({ "name": 'whoso@whoso.com', location: 'sifra123'}),
                   body: JSON.stringify({
-                    command: {
-                        komanda: firstPart,
-                        parametri: {
-                          parametar1: argument
-                        }
-                  }
+                    name: 'Asim',
+                    location: 'Lokacija',
+                    command: command
                 })
 
                   // body: JSON.stringify({
@@ -59,6 +67,16 @@ if(consoleOutput.length>1){
                   clone[clone.length-1] = res;
                   updateConsoleOutput(clone)
                 })
+
+              //   const requestOptions2 = {
+                  
+              // };
+              
+              // var odgovor = await fetch('http://109.237.36.76:25565/screenshot',
+              // requestOptions2,
+              // );
+              // var slika = await odgovor.text();
+              // console.log("Slika ", slika);
             }
         }
         

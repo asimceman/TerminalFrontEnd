@@ -1,5 +1,7 @@
 import React from "react";
 
+var token;
+
 const commands = {
   cd: 1,
   clear: 0,
@@ -14,12 +16,42 @@ const commands = {
 };
 
 const UseOnEnter = () => {
+
+    
+
   const [consoleOutput, updateConsoleOutput] = React.useState([]);
   const [savedLogs, setSavedLogs] = React.useState([]);
   const [counter, setCounter] = React.useState(0);
 
-  const onEnter = (value, key) => {
+  const onEnter = async (value, key) => {
+    
     if (key === "Enter") {
+      console.log("Proba")
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: 'whoso@whoso.com', password:  'sifra123'})
+  };
+
+  try {
+      var response = await fetch('http://167.99.244.168:3333/login', requestOptions);
+     //console.log(response.status)
+      
+      //console.log(x);
+      if(response.status == 200)
+      {
+          var x = await response.json();
+          console.log(JSON.stringify(x.accessToken));
+          token = JSON.stringify(x.accessToken)
+      }
+      else{
+        //console.log("Error");
+      }
+  }catch(e){
+    
+  }
+  
+    
       const newInput = value;
 
       if(value==="")
@@ -48,7 +80,7 @@ const UseOnEnter = () => {
     }
   };
 
-  return [consoleOutput, savedLogs, counter, onEnter, updateConsoleOutput];
+  return [consoleOutput, savedLogs, counter, onEnter, updateConsoleOutput, token];
 };
 
 export default UseOnEnter;

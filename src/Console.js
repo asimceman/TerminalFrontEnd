@@ -9,7 +9,7 @@ const Console = () => {
   
   const inputText = React.useRef();
 
-  const [consoleOutput, savedLogs, counter, onEnter, updateConsoleOutput] = UseOnEnter();
+  const [consoleOutput, savedLogs, counter, onEnter, updateConsoleOutput, token] = UseOnEnter();
 
   counterOfSavedLogs = counter;
   
@@ -42,7 +42,7 @@ const logsHistory= (e)=>{
 
   return (
     <section className="console">
-      <MapConsoleOutput consoleOutput={consoleOutput} updateConsoleOutput={updateConsoleOutput}/>
+      <MapConsoleOutput consoleOutput={consoleOutput} updateConsoleOutput={updateConsoleOutput} token={token}/>
       <div className="input-prompt">
         <Prompt />
         <input
